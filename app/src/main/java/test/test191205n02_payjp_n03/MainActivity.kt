@@ -2,6 +2,7 @@ package test.test191205n02_payjp_n03
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import java.util.*
 import jp.pay.android.Payjp
@@ -35,11 +36,24 @@ class MainActivity : AppCompatActivity() {
             //.replace(R.id.card_form_view, mCardFormFragment as Fragment, TAG_CARD_FORM)
             .replace(R.id.card_form_view, mCardFormFragment as Fragment, "TAG_CARD_FORM")
             .commit()
+        submitButton.setOnClickListener {
+            onClickSubmit()
+        }
+    }
 
+    fun onClickSubmit() {
+        Log.d("test191205n01", "test191205n01")
+        /*
+        if (!cardFormFragment.validateCardForm()) return
+        cardFormFragment.createToken().enqueue(object : Task.Callback<Token> {
+            override fun onSuccess(data: Token) {
+                Log.i("CardFormViewSample", "token => $data")
+            }
 
-
-
-
-
+            override fun onError(throwable: Throwable) {
+                Log.e("CardFormViewSample", "failure creating token", throwable)
+            }
+        })
+        */
     }
 }
