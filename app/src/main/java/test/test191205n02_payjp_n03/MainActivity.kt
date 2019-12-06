@@ -1,5 +1,6 @@
 package test.test191205n02_payjp_n03
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -44,19 +45,30 @@ class MainActivity : AppCompatActivity() {
 
     fun onClickSubmit() {
         Log.d("test191205n01", "test191205n01")
-        /*
-        if (!cardFormFragment.validateCardForm()) return
-        cardFormFragment.createToken().enqueue(object : Task.Callback<Token> {
+
+        //if (!cardFormFragment.validateCardForm()) return
+        if (!mCardFormFragment.validateCardForm()) return
+        //cardFormFragment.createToken().enqueue(object : Task.Callback<Token> {
+        mCardFormFragment.createToken().enqueue(object : Task.Callback<Token> {
             override fun onSuccess(data: Token) {
                 Log.i("CardFormViewSample", "token => $data")
+
+                Snackbar.make(findViewById(android.R.id.content), "test191206n02 token => $data", Snackbar.LENGTH_SHORT).show()
+
+                // httpリクエストを入れる変数
+                val builder = Uri.Builder()
+
+                //val task = AsyncHttpRequest(this)
+                val task = AsyncHttpRequest(this@MainActivity)
+                task.execute(builder)
             }
 
             override fun onError(throwable: Throwable) {
                 Log.e("CardFormViewSample", "failure creating token", throwable)
             }
         })
-        */
 
-        Snackbar.make(findViewById(android.R.id.content), "test191206n01", Snackbar.LENGTH_SHORT).show()
+
+        //Snackbar.make(findViewById(android.R.id.content), "test191206n01", Snackbar.LENGTH_SHORT).show()
     }
 }
