@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.Request
 //import java.util.*
 
-class AsyncHttpRequest(private val mainActivity: Activity)// 呼び出し元のアクティビティ
+class AsyncHttpRequest(private val mainActivity: Activity, private val token: String, private val price: Long, private val purchaseTo: Long, private val currentUID: String)// 呼び出し元のアクティビティ
     : AsyncTask<Uri.Builder, Void, String>() {
 
     // このメソッドは必ずオーバーライドする必要があるよ
@@ -23,10 +23,14 @@ class AsyncHttpRequest(private val mainActivity: Activity)// 呼び出し元の�
         val client = OkHttpClient()
         val MIMEType = MediaType.parse("application/json; charset=utf-8")
         val dataToSend_Map = HashMap<String, String>()
-        dataToSend_Map["payjp-token"] = 123.toString()
-        dataToSend_Map["price"] = 456.toString()
-        dataToSend_Map["purchaseTo"] = 1576000000000.toString()
-        dataToSend_Map["currentUID"] = "TCZazfEKrbUN8WMvl3j2qCEqsLI3"
+        //dataToSend_Map["payjp-token"] = 123.toString()
+        //dataToSend_Map["price"] = 456.toString()
+        //dataToSend_Map["purchaseTo"] = 1576000000000.toString()
+        //dataToSend_Map["currentUID"] = "TCZazfEKrbUN8WMvl3j2qCEqsLI3"
+        dataToSend_Map["payjp-token"] = token
+        dataToSend_Map["price"] = price.toString()
+        dataToSend_Map["purchaseTo"] = purchaseTo.toString()
+        dataToSend_Map["currentUID"] = currentUID
 
         val mapper = ObjectMapper() // 参考：https://qiita.com/opengl-8080/items/b613b9b3bc5d796c840c
         val dataToSend_json = mapper.writeValueAsString(dataToSend_Map)

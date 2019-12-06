@@ -51,7 +51,9 @@ class MainActivity : AppCompatActivity() {
         //cardFormFragment.createToken().enqueue(object : Task.Callback<Token> {
         mCardFormFragment.createToken().enqueue(object : Task.Callback<Token> {
             override fun onSuccess(data: Token) {
-                Log.i("CardFormViewSample", "token => $data")
+                Log.i("CardFormViewSample", "token => $data") // 不要
+                Log.d("test191205n03", data.card.id)
+                Log.d("test191205n04", data.id)
 
                 Snackbar.make(findViewById(android.R.id.content), "test191206n02 token => $data", Snackbar.LENGTH_SHORT).show()
 
@@ -59,7 +61,8 @@ class MainActivity : AppCompatActivity() {
                 val builder = Uri.Builder()
 
                 //val task = AsyncHttpRequest(this)
-                val task = AsyncHttpRequest(this@MainActivity)
+                //val task = AsyncHttpRequest(this@MainActivity)
+                val task = AsyncHttpRequest(this@MainActivity, data.id, 456.toLong(), 1576000000000.toLong(), "TCZazfEKrbUN8WMvl3j2qCEqsLI3")
                 task.execute(builder)
             }
 
