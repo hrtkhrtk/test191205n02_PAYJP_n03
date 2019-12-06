@@ -1,5 +1,6 @@
 package test.test191205n02_payjp_n03
 
+import android.app.DatePickerDialog
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,10 +17,20 @@ import jp.pay.android.ui.widget.PayjpCardFormFragment
 import jp.pay.android.ui.widget.PayjpCardFormView
 
 import kotlinx.android.synthetic.main.activity_main.*
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
+
+
 
 class MainActivity : AppCompatActivity() {
 
     val mCardFormFragment = PayjpCardFormFragment.newInstance()
+    var mUtc :Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +49,27 @@ class MainActivity : AppCompatActivity() {
             //.replace(R.id.card_form_view, mCardFormFragment as Fragment, TAG_CARD_FORM)
             .replace(R.id.card_form_view, mCardFormFragment as Fragment, "TAG_CARD_FORM")
             .commit()
-        submitButton.setOnClickListener {
-            onClickSubmit()
+
+
+        dateButton.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(this,
+                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                    val cal = Calendar.getInstance() // 参考：http://www.jp-z.jp/changelog/2011-06-03-1.html
+                    cal.set(year, month - 1, dayOfMonth, 23, 59, 59) // その日が終わるまで
+                    mUtc = cal.timeInMillis
+                    val dateString = year.toString() + "/" + String.format("%02d", month + 1) + "/" + String.format("%02d", dayOfMonth)
+                    dateButton.text = dateString
+                //}, mYear, mMonth, mDay)
+                }, 0, 0, 0) // 仮置き
+            datePickerDialog.show()
+        }
+
+        submitButton.setOnClickListener {v ->
+            if (mUtc == null) {
+                Snackbar.make(v, "日付を入力してください", Snackbar.LENGTH_LONG).show()
+            } else {
+                onClickSubmit()
+            }
         }
     }
 
@@ -62,7 +92,8 @@ class MainActivity : AppCompatActivity() {
 
                 //val task = AsyncHttpRequest(this)
                 //val task = AsyncHttpRequest(this@MainActivity)
-                val task = AsyncHttpRequest(this@MainActivity, data.id, 456.toLong(), 1576000000000.toLong(), "TCZazfEKrbUN8WMvl3j2qCEqsLI3")
+                //val task = AsyncHttpRequest(this@MainActivity, data.id, 456.toLong(), 1576000000000.toLong(), "TCZazfEKrbUN8WMvl3j2qCEqsLI3")
+                val task = AsyncHttpRequest(this@MainActivity, data.id, 456.toLong(), mUtc!!, "TCZazfEKrbUN8WMvl3j2qCEqsLI3")
                 task.execute(builder)
             }
 

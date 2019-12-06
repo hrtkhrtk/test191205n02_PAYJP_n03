@@ -10,11 +10,14 @@ android {
     defaultConfig {
         applicationId "test.test191205n02_payjp_n03"
         //minSdkVersion 15
-        minSdkVersion 16
+        //minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //multiDexEnabled true
     }
 
     sourceSets.all {
@@ -71,4 +74,8 @@ dependencies {
 
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.0"
+
+    // implementation 'com.android.support:multidex:1.0.3' // ダメっぽい
+    //implementation 'androidx.multidex:multidex:2.0.1' // AndroidXではこっちっぽい // 参考：https://developer.android.com/studio/build/multidex?hl=ja
 }

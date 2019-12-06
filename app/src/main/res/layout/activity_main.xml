@@ -14,10 +14,18 @@
         android:paddingTop="16dp"
         tools:context=".MainActivity">
 
-        <FrameLayout
-            android:id="@+id/card_form_view"
+        <Button
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:id="@+id/dateButton"
+            android:layout_marginTop="4dp"
+            android:text="----/--/--" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/card_form_view"
+            android:layout_below="@+id/dateButton"/>
 
         <Button
             android:layout_width="match_parent"
@@ -27,5 +35,12 @@
             android:text="submit"
             android:layout_below="@+id/card_form_view"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/statusText"
+            android:layout_marginTop="20dp"
+            android:text="dummy"
+            android:layout_below="@+id/submitButton"/>
     </RelativeLayout>
 </ScrollView>
